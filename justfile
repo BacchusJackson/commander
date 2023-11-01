@@ -2,8 +2,8 @@ default:
 	@just --choose
 
 bin := "./bin"
-app := bin / "guardian"
-src := "./cmd/guardian"
+app := bin / "cmdr"
+src := "./cmd/commander"
 
 build:
 	mkdir -p {{bin}}

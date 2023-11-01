@@ -1,0 +1,17 @@
+{
+  "docker-build": {
+    "description": "build an image with docker",
+    "template": "docker build {{- if .file}} --file {{.file}} {{end}} {{- if .context}} {{.context}} {{else}} . {{- end}}",
+    "values": {
+      "file": "Dockerfile.custom"
+    }
+  },
+  "echo": {
+    "description": "print a text message",
+    "template": "echo {{- if .newline}} -n {{end -}} \"{{.msg}}\"",
+    "values": {
+      "msg": "howdy world",
+      "newline": "true"
+    }
+  }
+}

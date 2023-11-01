@@ -3,8 +3,10 @@ module example
 go 1.21.1
 
 require (
+	github.com/BurntSushi/toml v1.3.2
 	github.com/bep/simplecobra v0.3.2
 	github.com/lmittmann/tint v1.0.2
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (

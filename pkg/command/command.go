@@ -1,4 +1,4 @@
-package commander
+package command
 
 import (
 	"fmt"
@@ -11,9 +11,9 @@ import (
 
 // Command is a data representation of a single command
 type Command struct {
-	Description string            `json:"description,omitempty"`
-	Template    string            `json:"template"`
-	Values      map[string]string `json:"values"`
+	Description string            `json:"description,omitempty" yaml:"description,omitempty" toml:"description,omitempty"`
+	Template    string            `json:"template" yaml:"template" toml:"template"`
+	Values      map[string]string `json:"values" yaml:"values" toml:"values" `
 }
 
 // Print parses the Template field and executes uses the Values field
