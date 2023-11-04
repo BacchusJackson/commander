@@ -10,6 +10,9 @@ build:
 	go build -o {{app}} {{src}}
 
 test:
+	go test ./...
+
+test-debug:
 	go test -v ./...
 
 coverage:

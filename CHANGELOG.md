@@ -9,5 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- DevEx tools
+- Documentation
+- Init Command
+- Exec Command
 - Initial commands
+
 
