@@ -9,6 +9,9 @@ build:
 	mkdir -p {{bin}}
 	go build -o {{app}} {{src}}
 
+build-image:
+	docker build -t commander:latest .
+
 test:
 	go test ./...
 

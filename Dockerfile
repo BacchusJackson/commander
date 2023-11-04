@@ -5,7 +5,7 @@ COPY . .
 
 RUN apk --no-cache add ca-certificates git openssh make
 
-RUN go build -ldflags="-w -s -extldflags '-static' -X 'main.Version=$(git rev-parse HEAD)'" -o /usr/local/bin/commander .
+RUN go build -ldflags="-w -s -extldflags '-static' -X 'main.Version=$(git rev-parse HEAD)'" -o /usr/local/bin/commander ./cmd/commander
 
 FROM alpine:latest as final-base
 
