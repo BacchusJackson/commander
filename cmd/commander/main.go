@@ -11,7 +11,7 @@ import (
 	"github.com/lmittmann/tint"
 )
 
-const CLIVersion = "v0.1.0-pre"
+const CLIVersion = "v0.1.0"
 const exitOk = 0
 const exitSystemFailure = 1
 const exitCommandFailure = 2
