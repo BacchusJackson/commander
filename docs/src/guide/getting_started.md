@@ -1,11 +1,11 @@
 # Getting Started
 
-Guardian CLI has a `init` command that will give you place to start when writing template commands.
+Commander lets you template shell commands using [Go's Templating Library](https://pkg.go.dev/text/template) with helpful built-in functions.
+Shell commands can be rendered with provided configured values in a single file.
 
-It's important to note that there is support for JSON, YAML, or TOML with all configuration files.
-
-`guardian-cli init -o json`
-
+```
+cmdr init > commander.json
+```
 ```json
 {
   "docker-build": {
@@ -26,40 +26,47 @@ It's important to note that there is support for JSON, YAML, or TOML with all co
 }
 ```
 
-`guardian-cli init -o yaml`
-
-```yaml
-docker-build:
-  description: build an image with docker
-  template: docker build {{- if .file}} --file {{.file}} {{end}} {{- if .context}} {{.context}} {{else}} . {{- end}}
-  values:
-    file: Dockerfile.custom
-echo:
-  description: print a text message
-  template: echo {{- if .newline}} -n {{end -}} "{{.msg}}"
-  values:
-    msg: howdy world
-    newline: "true"
+```shell
+cmdr exec --file commander.json --target echo
+# output: "howdy world"
 ```
 
-`guardian-cli init -o toml`
+### Support file formats
 
+Commander supports configuration files in JSON, YAML or TOML using the `--encode` (`-e` shorthand) flag.
+
+YAML configuration
+```yaml
+docker-build:
+    description: build an image with docker
+    template: docker build {{- if .file}} --file {{.file}} {{end}} {{- if .context}} {{.context}} {{else}} . {{- end}}
+    values:
+        file: Dockerfile.custom
+echo:
+    description: print a text message
+    template: echo {{- if .newline}} -n {{end -}} "{{.msg}}"
+    values:
+        msg: howdy world
+        newline: "true"
+```
+
+TOML configuration
 ```toml
 [docker-build]
 description = "build an image with docker"
 template = "docker build {{- if .file}} --file {{.file}} {{end}} {{- if .context}} {{.context}} {{else}} . {{- end}}"
-
 [docker-build.values]
 file = "Dockerfile.custom"
 
 [echo]
 description = "print a text message"
 template = "echo {{- if .newline}} -n {{end -}} \"{{.msg}}\""
-
 [echo.values]
 msg = "howdy world"
 newline = "true"
 ```
+
+Note: Environment variable expansion happens when the command is rendered, before execution.
 
 Commands have three parts: a name, description, and template.
 
@@ -78,7 +85,7 @@ Inside the template, values are prefixed with a dot while in the values array, t
 The best way to build a command is to do so incrementally.
 Start with the command as you would execute it locally and pick out the parts that could be template'd.
 
-Build this out into a Guardian command, here we'll use TOML for readability 
+Build this out into a Commander command, here we'll use TOML for readability 
 but note that YAML and JSON are also supported.
 TOML has support for multi-line strings by using triple quotes
 
@@ -92,7 +99,7 @@ echo "Some Content" | wc -c
 Using the `--dry-run` or `-n` flag will print the command after executing the template.
 
 ```shell
-guardian-cli exec -n --file example.toml --target count-chars
+cmdr exec -n --file example.toml --target count-chars
 ```
 
 Result:
@@ -149,7 +156,7 @@ docker build {{- if .dockerfile}} --file {{.dockerfile}} {{- end}} \
 
 Multiple Build Arguments
 
-Uses the `mflag` custom function built into Guardian
+Uses the `mflag` custom function built into Commander
 
 ```
 docker build {{- if .dockerfile}} --file {{.dockerfile -}} {{end}} \

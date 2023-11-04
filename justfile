@@ -26,17 +26,12 @@ release-snapshot:
 
 # release with goreleaser
 # Needs GITHUB_TOKEN defined
+# example: GITHUB_TOKEN just release
 release:
 	goreleaser release --clean
 
-serve_docs:
+serve:
 	cd docs && mdbook serve
 	
 clean:
 	rm -rf {{bin}}
-
-# ex:
-# 	echo {{APP_MAIN}}
-# ex:
-# 	#!/usr/bin/env nu
-# 	ls

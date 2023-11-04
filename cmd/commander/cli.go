@@ -146,6 +146,8 @@ func (c *execCmd) Run(ctx context.Context, cmdr *simplecobra.Commandeer, _ []str
 		log.Error("failed to generate system command", "err", err)
 		return err
 	}
+	execCmd.Stderr = cmdr.CobraCommand.ErrOrStderr()
+	execCmd.Stdout = cmdr.CobraCommand.OutOrStdout()
 	log.Debug("execute system command", "exec_cmd", execCmd.String())
 	if c.flagDryRun {
 		cmdr.CobraCommand.Println(execCmd.String())

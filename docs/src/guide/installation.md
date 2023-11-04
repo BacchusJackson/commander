@@ -14,6 +14,6 @@ The easiest way is to use `make build` which will put the binary in the folder `
 
 ```shell
 git clone https://github.com/BacchusJackson/commander.git
-make build
+just build
 ./bin/commander --help
 ```

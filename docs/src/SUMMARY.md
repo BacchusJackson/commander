@@ -12,8 +12,8 @@
 - [Command Line Tool](cli/README.md)
   - [init](cli/init.md)
   - [exec](cli/exec.md)
-- [Custom Functions](custom_functions/README.md)
-  - [mflag](custom_functions/mflag.md)
+- [Built-Ins](built-ins/README.md)
+  - [mflag](built-ins/mflag.md)
 
 # Tips & Tricks
 - [Tips & Tricks](tips/README.md)

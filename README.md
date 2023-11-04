@@ -6,10 +6,72 @@
 
 ![Commander Logo](assets/commander-logo-dark-theme-splash.png)
 
+## Quick Start
 
-Unlike the "system" library call from C and other languages, the os/exec package intentionally does not invoke the 
-system shell and does not expand any glob patterns or handle other expansions, pipelines, or redirections typically 
-done by shells. 
+Commander lets you template shell commands using [Go's Templating Library](https://pkg.go.dev/text/template) with helpful built-in functions.
+Shell commands can be rendered with provided configured values in a single file.
 
-Environment variable expansion happens before the command is executed.
+```
+cmdr init > commander.json
+```
+```json
+{
+  "docker-build": {
+    "description": "build an image with docker",
+    "template": "docker build {{- if .file}} --file {{.file}} {{end}} {{- if .context}} {{.context}} {{else}} . {{- end}}",
+    "values": {
+      "file": "Dockerfile.custom"
+    }
+  },
+  "echo": {
+    "description": "print a text message",
+    "template": "echo {{- if .newline}} -n {{end -}} \"{{.msg}}\"",
+    "values": {
+      "msg": "howdy world",
+      "newline": "true"
+    }
+  }
+}
+```
 
+```shell
+cmdr exec --file commander.json --target echo
+# output: "howdy world"
+```
+
+### Support file formats
+
+Commander supports configuration files in JSON, YAML or TOML using the `--encode` (`-e` shorthand) flag.
+
+YAML configuration
+```yaml
+docker-build:
+    description: build an image with docker
+    template: docker build {{- if .file}} --file {{.file}} {{end}} {{- if .context}} {{.context}} {{else}} . {{- end}}
+    values:
+        file: Dockerfile.custom
+echo:
+    description: print a text message
+    template: echo {{- if .newline}} -n {{end -}} "{{.msg}}"
+    values:
+        msg: howdy world
+        newline: "true"
+```
+
+TOML configuration
+```toml
+[docker-build]
+description = "build an image with docker"
+template = "docker build {{- if .file}} --file {{.file}} {{end}} {{- if .context}} {{.context}} {{else}} . {{- end}}"
+[docker-build.values]
+file = "Dockerfile.custom"
+
+[echo]
+description = "print a text message"
+template = "echo {{- if .newline}} -n {{end -}} \"{{.msg}}\""
+[echo.values]
+msg = "howdy world"
+newline = "true"
+```
+
+Note: Environment variable expansion happens when the command is rendered, before execution.
